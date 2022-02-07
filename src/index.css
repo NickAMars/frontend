@@ -1,13 +1,11 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+  height: 40px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
+  top: -5px;
+}
+
+.MuiGrid-container {
+  flex-wrap: nowrap !important;
 }
