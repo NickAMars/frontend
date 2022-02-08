@@ -32,17 +32,17 @@ Project is to collect the data from api display them in the drop down list and s
 
 ## Assumptions made
 
-User was to select colors from exist color by the drop down selecter.
-We are not allow to add multiple groups at a giving time. 
-Group names with colors as grouping names by groups.
-user is able to add eny number of persons to a particular group.
-user is not able to submit an empty list of items for a group.
-user is only allow to enter 50 characters for group and user.
+User was to select colors from exist color by the drop down selecter.\
+We are not allow to add multiple groups at a giving time.\
+Group names with colors as grouping names by groups.\
+user is able to add eny number of persons to a particular group.\
+user is not able to submit an empty list of items for a group.\
+user is only allow to enter 50 characters for group and user.\
 
 
 
 ## Thing to do
 
-Divide the ModalForm into more peices.
+Divide the ModalForm into more peices.\
 Work on test case for component using jest
 
