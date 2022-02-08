@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { PureComponent } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
@@ -27,87 +27,93 @@ const style = {
   borderRadius: 2,
 };
 
-export default function AddGroupButton({ finishPost }) {
-  // opens the model up to use
-  const [modal, setModal] = useState(false);
-  //  adding the form fields
-  const [info, setInfo] = useState([
-    { name: "", color: "", errorName: false, errorColor: false },
-  ]);
-  const [valid, setValid] = useState([false]);
-
-  const handleOpen = () => setModal(true);
-  const handleClose = () => {
-    //place back to the original state
-    setInfo([{ name: "", color: "", errorName: false, errorColor: false }]);
-    setModal(false);
-    setValid([false]);
+export default class ModalForm extends PureComponent {
+  state = {
+    body: [{ name: "", color: "", errorName: false, errorColor: false }],
+    valid: [false],
+    modal: false,
   };
-
-  const handleInputChange = (e, index) => {
+  handleInputChange = (e, index) => {
     const { name, value } = e.target;
     // cerate a new instance of state
-    const newState = [...info];
+    const newBody = [...this.state.body];
     // change the target instance of the state
-    newState[index][name] = value;
+    newBody[index][name] = value;
+    // change the state of the body
+    this.setState({ body: newBody });
+  };
 
-    setInfo(newState);
+  addFields = () => {
+    this.setState({
+      body: [
+        ...this.state.body,
+        { name: "", color: "", errorName: false, errorColor: false },
+      ],
+      valid: [...this.state.valid, false],
+    });
   };
-  const addFields = () => {
-    setInfo([
-      ...info,
-      { name: "", color: "", errorName: false, errorColor: false },
-    ]);
-    setValid([...valid, false]);
+  removeField = (index) => {
+    const validState = [
+      ...this.state.valid.slice(0, index),
+      ...this.state.valid.slice(index + 1),
+    ];
+    const newBody = [
+      ...this.state.body.slice(0, index),
+      ...this.state.body.slice(index + 1),
+    ];
+    this.setState({ body: newBody, value: validState });
   };
-  const removeField = (index) => {
-    const validState = [...valid.slice(0, index), ...valid.slice(index + 1)];
-    const newState = [...info.slice(0, index), ...info.slice(index + 1)];
-
-    setValid(validState);
-    setInfo(newState);
-  };
-  const errorHandler = (text, index, error) => {
+  errorHandler = (text, index, error) => {
     // if value is empty. display am error message to the user
-    const newState = [...info];
-    const validState = [...valid];
+    const newBody = [...this.state.body];
+    const validState = [...this.state.valid];
     if (text.length === 0) {
-      newState[index][error] = true;
-      setInfo(newState);
-    } else if (newState[index][error]) {
-      newState[index][error] = false;
-      setInfo(newState);
+      newBody[index][error] = true;
+    } else if (newBody[index][error]) {
+      newBody[index][error] = false;
     }
     // when both of them are true we set the set validate to true for that index
     validState[index] =
-      !newState[index]["errorColor"] && !newState[index]["errorName"];
-    setValid(validState);
+      !newBody[index]["errorColor"] && !newBody[index]["errorName"];
+    this.setState({ valid: validState, body: newBody });
   };
-
-  const isNotValid = !(
-    valid.every((isValid) => isValid === true) && info.length !== 0
-  );
-
-  const handleSubmit = (event) => {
+  handleSubmit = (event) => {
     event.preventDefault();
     // updating the database
-    const body = convertIntoBody(info);
+    const body = convertIntoBody(this.state.body);
     axios
       .post(`http://localhost:8080/api/1.0.0/groups`, body)
       .then((result) => {
-          // update the call to display the tree
-          finishPost();
+        // update the call to display the tree
+        this.props.afterLoad();
       });
-    handleClose();
+    this.handleClose();
   };
-  return (
-    <>
-      <Button variant="outlined" onClick={handleOpen}>
-        Add Group
-      </Button>
+  handleOpen = () => this.setState({ modal: true }); // setModal(true);
+  handleClose = () => {
+    this.props.close();
+    this.setState({
+      body: [{ name: "", color: "", errorName: false, errorColor: false }],
+      valid: [false],
+      modal: false,
+    });
+  };
+
+  componentDidMount() {}
+  static getDerivedStateFromProps(props, state) {
+    if (props.isOpen && props.isOpen !== state.modal) {
+      return { modal: props.isOpen };
+    } else return null;
+  }
+  render() {
+    const isNotValid = !(
+      this.state.valid.every((isValid) => isValid === true) &&
+      this.state.body.length !== 0
+    );
+    return (
       <Modal
-        open={modal}
-        onClose={handleClose}
+        open={this.state.modal}
+        onClose={this.handleClose}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
       >
@@ -135,7 +141,7 @@ export default function AddGroupButton({ finishPost }) {
                 Add Group
               </Typography>
               <Tooltip title="close the dialog" placement="right">
-                <IconButton aria-label="close" onClick={handleClose}>
+                <IconButton aria-label="close" onClick={this.handleClose}>
                   <CloseIcon color="error" fontSize="medium" />
                 </IconButton>
               </Tooltip>
@@ -145,7 +151,7 @@ export default function AddGroupButton({ finishPost }) {
                 <IconButton
                   color="success"
                   aria-label="add"
-                  onClick={addFields}
+                  onClick={this.addFields}
                 >
                   <AddIcon fontSize="large" />
                 </IconButton>
@@ -153,7 +159,7 @@ export default function AddGroupButton({ finishPost }) {
             </div>
           </div>
           <hr />
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <div
               style={{
                 overflowY: "auto",
@@ -162,8 +168,8 @@ export default function AddGroupButton({ finishPost }) {
                 paddingTop: 5,
               }}
             >
-              {info.length !== 0 ? (
-                info.map((user, i) => (
+              {this.state.body.length !== 0 ? (
+                this.state.body.map((user, i) => (
                   <Grid container spacing={2} key={i}>
                     <Grid item xs={5}>
                       <TextField
@@ -174,7 +180,7 @@ export default function AddGroupButton({ finishPost }) {
                         variant="outlined"
                         value={user["name"]}
                         onBlur={() => {
-                          errorHandler(user["name"], i, "errorName");
+                          this.errorHandler(user["name"], i, "errorName");
                         }}
                         inputProps={{ maxLength: 50 }}
                         helperText={
@@ -183,7 +189,7 @@ export default function AddGroupButton({ finishPost }) {
                             : ""
                         }
                         error={user["errorName"] && user["name"].length === 0}
-                        onChange={(event) => handleInputChange(event, i)}
+                        onChange={(event) => this.handleInputChange(event, i)}
                       />
                     </Grid>
                     <Grid item xs={5}>
@@ -195,7 +201,7 @@ export default function AddGroupButton({ finishPost }) {
                         variant="outlined"
                         value={user["color"]}
                         onBlur={() => {
-                          errorHandler(user["color"], i, "errorColor");
+                          this.errorHandler(user["color"], i, "errorColor");
                         }}
                         inputProps={{ maxLength: 50 }}
                         helperText={
@@ -204,7 +210,7 @@ export default function AddGroupButton({ finishPost }) {
                             : ""
                         }
                         error={user["errorColor"] && user["color"].length === 0}
-                        onChange={(event) => handleInputChange(event, i)}
+                        onChange={(event) => this.handleInputChange(event, i)}
                       />
                     </Grid>
                     <Grid
@@ -219,7 +225,7 @@ export default function AddGroupButton({ finishPost }) {
                         <IconButton
                           aria-label="remove"
                           color="error"
-                          onClick={() => removeField(i)}
+                          onClick={() => this.removeField(i)}
                         >
                           <DeleteIcon fontSize="large" />
                         </IconButton>
@@ -253,7 +259,11 @@ export default function AddGroupButton({ finishPost }) {
               alignItems="center"
               direction="row"
             >
-              <Button variant="outlined" color="primary" onClick={handleClose}>
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={this.handleClose}
+              >
                 Cancel
               </Button>
               <Button
@@ -268,6 +278,6 @@ export default function AddGroupButton({ finishPost }) {
           </form>
         </Box>
       </Modal>
-    </>
-  );
+    );
+  }
 }

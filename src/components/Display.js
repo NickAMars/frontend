@@ -28,7 +28,7 @@ export default function Display({ color, loading }) {
             renderTree(newCategory, newNodes)
           )
         : nodes.map((item) => (
-            <TreeItem key={item + "1"} nodeId={item + "1"} label={item} />
+            <TreeItem key={item} nodeId={item} label={item} />
           ))}
     </TreeItem>
   );
