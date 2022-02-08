@@ -9,7 +9,11 @@ export default function Display({ color, loading }) {
   const [collection, setCollection] = useState({});
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/1.0.0/groups?color=${color}`)
+      .get(
+        `http://localhost:8080/api/1.0.0/groups${
+          color ? "?color=" + color : ""
+        }`
+      )
       .then((result) => {
         if (result?.data) {
           setCollection(result.data);

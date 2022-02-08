@@ -19,7 +19,7 @@ function App() {
       <Grid item xs style={{ padding: "15px" }}>
         <Grid container>
           <Grid item xs={6}>
-            <Selector getColor={getColor} />
+            <Selector getColor={getColor} loading={loading}/>
           </Grid>
           <Grid item xs={6} container justifyContent="flex-end">
             <AddGroupButton finishPost={finishPost} />

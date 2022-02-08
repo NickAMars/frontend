@@ -19,7 +19,7 @@ function Selector(props) {
         setColors(collect);
       }
     });
-  }, []);
+  }, [props.loading]);
   const handleChange = (event) => {
     setSelect(event.target.value);
   };
