@@ -18,8 +18,8 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "50vw",
-  height: "55vh",
+  width: "500px",
+  height: "500px",
   border: "1px solid #aaa",
   boxShadow: 24,
   p: 4,
@@ -164,7 +164,8 @@ export default class ModalForm extends PureComponent {
               style={{
                 overflowY: "auto",
                 overflowX: "hidden",
-                height: "35vh",
+                height: "300px",
+                marginBottom: "20px",
                 paddingTop: 5,
               }}
             >
