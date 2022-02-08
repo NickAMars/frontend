@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Start Server Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    creating a front end application which provides the capability of creating a group.
+    fetching the groups and colors. Displaying the user for the selected color.
+
+## install packages creating the node modules with the following command
+
+    `npm install`
 
 ## Available Scripts
 
-In the project directory, you can run:
+### run the application using this script
 
-### `npm start`
+    `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### run the application in test mode with
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    `npm run test`
 
-### `npm test`
+### look at the application test converage
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    `npm run coverage`
 
-### `npm run build`
+## Introduction
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Project is to collect the data from api display them in the drop down list and show them in the drop down. it also gives you a way that you can update the view to see the color. You can select on the drop down and see which user has a color and which user is in the current group.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Endpoints To recieve data:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    `[GET] /api/${version}/groups?color={value}`
+    `[POST] /api/${version}/groups`
 
-### `npm run eject`
+## Assumptions made
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+User was to select colors from exist color by the drop down selecter.\
+We are not allow to add multiple groups at a giving time.\
+Group names with colors as grouping names by groups.\
+user is able to add eny number of persons to a particular group.\
+user is not able to submit an empty list of items for a group.\
+user is only allow to enter 50 characters for group and user.\
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Thing to do
 
-## Learn More
+Divide the ModalForm into more peices.\
+Work on test case for component using jest
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
