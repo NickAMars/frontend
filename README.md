@@ -19,7 +19,7 @@
 
 ### look at the application test converage
 
-    `npm run coverage`
+    `npm test -- --coverage`
 
 ## Introduction
 
@@ -37,7 +37,7 @@ We are not allow to add multiple groups at a giving time.\
 Group names with colors as grouping names by groups.\
 user is able to add eny number of persons to a particular group.\
 user is not able to submit an empty list of items for a group.\
-user is only allow to enter 50 characters for group and user.\
+user is only allow to enter 50 characters for group and user.
 
 
 
