@@ -95,14 +95,10 @@ export default function AddGroupButton({ finishPost }) {
     axios
       .post(`http://localhost:8080/api/1.0.0/groups`, body)
       .then((result) => {
-        if (result?.data) {
           // update the call to display the tree
           finishPost();
-        }
       });
-    // valid form
-    // console.log(info);
-    // console.log(valid);
+    handleClose();
   };
   return (
     <>

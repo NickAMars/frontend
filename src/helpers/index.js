@@ -1,6 +1,6 @@
 export const getColors = (data) => {
   let collectColors = [];
-  for (let [color, ] of Object.entries(data)) {
+  for (let [color] of Object.entries(data)) {
     collectColors.push(color);
   }
 
@@ -8,9 +8,9 @@ export const getColors = (data) => {
 };
 
 export const convertIntoBody = (datas) => {
-  const body = {};
+  const body = [];
   for (let data of datas) {
-    body[data.name] = data.color;
+    body.push({ name: data.name, color: data.color });
   }
   return body;
 };
